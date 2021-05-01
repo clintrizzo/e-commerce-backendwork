@@ -1,28 +1,25 @@
-const router = require('express').Router();
-const { Tag, Product, ProductTag } = require('../../models');
+const { Model, DataTypes } = require('sequelize');
 
-// The `/api/tags` endpoint
+const sequelize = require('../config/connection.js');
 
-router.get('/', (req, res) => {
-  // find all tags
-  // be sure to include its associated Product data
+class Tag extends Model {}
+
+Tag.init({
+    id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        primaryKey: true,
+        autoIncrement: true
+    },
+    tag_name: {
+        type: DataTypes.STRING,
+    }
+}, {
+    sequelize,
+    timestamps: false,
+    freezeTableName: true,
+    underscored: true,
+    modelName: 'tag',
 });
 
-router.get('/:id', (req, res) => {
-  // find a single tag by its `id`
-  // be sure to include its associated Product data
-});
-
-router.post('/', (req, res) => {
-  // create a new tag
-});
-
-router.put('/:id', (req, res) => {
-  // update a tag's name by its `id` value
-});
-
-router.delete('/:id', (req, res) => {
-  // delete on tag by its `id` value
-});
-
-module.exports = router;
+module.exports = Tag;
